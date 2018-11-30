@@ -10,24 +10,52 @@ using SFML.Window;
 
 namespace GameEngine
 {
-	static class Program
+	static partial class Program
 	{
-		static void Main()
+		private static void DrawGame(Window window, float dt)
 		{
-			var window = new RenderWindow(new VideoMode(600, 600), "Ideological War 1948");
-			window.Closed += OnClose;
 
-			while(window.IsOpen)
+		}
+
+		private static void UpdateGame(Window window, float dt)
+		{
+
+		}
+
+		private static void Main()
+		{
+			var window = CreateRenderWindow(600, 600, "Ideological War 1948", new ContextSettings());
+
+			var clock = new Clock();
+			while (window.IsOpen)
 			{
+				var dt = clock.ElapsedTime.AsMicroseconds() / 0.000001f;
+
 				window.DispatchEvents();
+				UpdateGame(window, dt);
 				window.Clear();
+				DrawGame(window, dt);
 				window.Display();
 			}
 		}
 
-		private static void OnClose(object sender, EventArgs e)
+		private static RenderWindow CreateRenderWindow(uint x, uint y, string logo, ContextSettings settings)
 		{
-			(sender as Window).Close();
+			var window = new RenderWindow(new VideoMode(x, y), logo, Styles.Default, settings);
+
+			window.SetFramerateLimit(120);
+			window.SetKeyRepeatEnabled(false);
+
+			window.Closed += OnClosed;
+			window.KeyPressed += OnKeyPressed;
+			window.KeyReleased += OnKeyReleased;
+			window.MouseButtonPressed += OnMouseButtonPressed;
+			window.MouseButtonReleased += OnMouseButtonReleased;
+			window.MouseMoved += OnMouseMoved;
+			window.LostFocus += OnLostFocus;
+			window.GainedFocus += OnGainedFocus;
+
+			return window;
 		}
 	}
 }
