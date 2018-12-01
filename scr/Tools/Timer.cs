@@ -1,9 +1,5 @@
 ﻿using SFML.System;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Tools
 {
@@ -29,17 +25,13 @@ namespace GameEngine.Tools
 		{
 			Time += Clock.Restart();
 
-			if (Time >= Interval)
+			Ticked = Time >= Interval;
+
+			while (Time >= Interval)
 			{
-				while (Time >= Interval)
-				{
-					Time -= Interval;
-					Tick();
-					Ticked = true;
-				}
-			}
-			else
-				Ticked = false;
+				Time -= Interval;
+				Tick();
+			}				
 		}
 	}
 }
