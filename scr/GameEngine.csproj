@@ -109,6 +109,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Battalion.cs" />
     <Compile Include="Game\Country.cs" />
     <Compile Include="Game\Region.cs" />
     <Compile Include="Game\Territory.cs" />
