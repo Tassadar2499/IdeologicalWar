@@ -159,6 +159,15 @@
     <Error Condition="!Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.11.0\build\NUnit.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)\..\extlibs\* $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>echo #Копируем библиотеки extlibs
+copy $(ProjectDir)..\extlibs\* $(TargetDir) 
+echo #Удаляем data в папке сборки
+rd $(TargetDir)\data\ /S /Q
+echo #Копируем data
+xcopy $(ProjectDir)..\data $(TargetDir)\data\ /E /Q</PreBuildEvent>
   </PropertyGroup>
 </Project>
