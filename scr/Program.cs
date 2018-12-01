@@ -9,7 +9,7 @@ using SFML.System;
 using SFML.Window;
 
 namespace GameEngine
-{//
+{
 	static partial class Program
 	{
 		private static void DrawGame(Window window, float dt)
