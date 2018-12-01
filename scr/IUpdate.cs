@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SFML.System;
 
 namespace GameEngine
 {
 	public interface IUpdate
 	{
-		void Update(float dt);
+		void Update(Time dt);
 	}
 }

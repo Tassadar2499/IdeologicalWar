@@ -12,12 +12,12 @@ namespace GameEngine
 {
 	static partial class Program
 	{
-		private static void DrawGame(Window window, float dt)
+		private static void DrawGame(Window window, Time dt)
 		{
 
 		}
 
-		private static void UpdateGame(Window window, float dt)
+		private static void UpdateGame(Window window, Time dt)
 		{
 
 		}
@@ -29,7 +29,7 @@ namespace GameEngine
 			var clock = new Clock();
 			while (window.IsOpen)
 			{
-				var dt = clock.ElapsedTime.AsMicroseconds() / 0.000001f;
+				var dt = clock.ElapsedTime;
 
 				window.DispatchEvents();
 				UpdateGame(window, dt);

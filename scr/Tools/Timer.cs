@@ -5,7 +5,6 @@ namespace GameEngine.Tools
 {
 	class Timer : IUpdate
 	{
-		private Clock Clock { get; set; } = new Clock();
 		public Time Time { get; private set; } = Time.Zero;
 		public Time Interval { get; set; }
 
@@ -21,9 +20,9 @@ namespace GameEngine.Tools
 			Interval = interval;
 		}
 
-		public void Update(float dt)
+		public void Update(Time dt)
 		{
-			Time += Clock.Restart();
+			Time += dt;
 
 			Ticked = Time >= Interval;
 
