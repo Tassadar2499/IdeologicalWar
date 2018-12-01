@@ -111,6 +111,7 @@
   <ItemGroup>
     <Compile Include="Game\Country.cs" />
     <Compile Include="Game\Region.cs" />
+    <Compile Include="Game\Territory.cs" />
     <Compile Include="IUpdate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
