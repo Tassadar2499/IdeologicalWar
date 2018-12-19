@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using System.Text.RegularExpressions;
 
 namespace GameEngine
 {
 	static partial class Program
 	{
+		const float speedFactor = 0.0001f;
+
 		private static RenderWindow GameWindow;
 		private static GameData CurrentGameData;
-
-		private static bool IsUpPressed = false;
-		private static bool IsLeftPressed = false;
-		private static bool IsRightPressed = false;
-		private static bool IsDownPressed = false;
-
-		const float speedFactor = 0.0001f;
+		private static Dictionary<Keyboard.Key, bool> IsKeyPressed
+			= new Dictionary<Keyboard.Key, bool>()
+			{
+				[Keyboard.Key.W] = false,
+				[Keyboard.Key.A] = false,
+				[Keyboard.Key.S] = false,
+				[Keyboard.Key.D] = false
+			};
 
 		private static void DrawGame(RenderWindow window, Time dt)
 		{
@@ -32,6 +35,7 @@ namespace GameEngine
 		{
 			foreach (var province in CurrentGameData.Provinces)
 				province.Update(window, dt);
+
 			UpdateMovement(dt);
 		}
 
@@ -89,14 +93,14 @@ namespace GameEngine
 			var view = GameWindow.GetView();
 			var range = 200f * dt.AsSeconds();
 
-			if (IsUpPressed)
+			if (IsKeyPressed[Keyboard.Key.W])
 				view.Move(new Vector2f(0, -range));
-			if (IsDownPressed)
+			if (IsKeyPressed[Keyboard.Key.S])
 				view.Move(new Vector2f(0, range));
 
-			if (IsRightPressed)
+			if (IsKeyPressed[Keyboard.Key.D])
 				view.Move(new Vector2f(range, 0));
-			if (IsLeftPressed)
+			if (IsKeyPressed[Keyboard.Key.A])
 				view.Move(new Vector2f(-range, 0));
 
 			GameWindow.SetView(view);

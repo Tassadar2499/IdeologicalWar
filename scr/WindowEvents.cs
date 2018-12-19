@@ -19,41 +19,12 @@ namespace GameEngine
 
 		private static void OnKeyReleased(object sender, KeyEventArgs e)
 		{
-			switch (e.Code)
-			{
-				case Keyboard.Key.W:
-					IsUpPressed = false;
-					break;
-				case Keyboard.Key.A:
-					IsLeftPressed = false;
-					break;
-				case Keyboard.Key.S:
-					IsDownPressed = false;
-					break;
-				case Keyboard.Key.D:
-					IsRightPressed = false;
-					break;
-			}
+			IsKeyPressed[e.Code] = false;
 		}
 
 		private static void OnKeyPressed(object sender, KeyEventArgs e)
 		{
-			switch (e.Code)
-			{
-				case Keyboard.Key.W:
-					IsUpPressed = true;
-					break;
-				case Keyboard.Key.A:
-					IsLeftPressed = true;
-					break;
-				case Keyboard.Key.S:
-					IsDownPressed = true;
-					break;
-				case Keyboard.Key.D:
-					IsRightPressed = true;
-					break;
-			}
-
+			IsKeyPressed[e.Code] = true;
 		}
 
 		private static void OnMouseMoved(object sender, MouseMoveEventArgs e)
