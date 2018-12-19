@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine.Game
+namespace GameEngine
 {
-	class Country
+	class GameData
 	{
-
+		public List<Province> Provinces = new List<Province>();
 	}
 }

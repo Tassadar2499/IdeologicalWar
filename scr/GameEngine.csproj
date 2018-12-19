@@ -109,13 +109,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Battalion.cs" />
-    <Compile Include="Game\Country.cs" />
-    <Compile Include="Game\Region.cs" />
-    <Compile Include="Game\Territory.cs" />
+    <Compile Include="GameData.cs" />
     <Compile Include="IUpdate.cs" />
+    <Compile Include="MapLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Province.cs" />
+    <Compile Include="Tools\ConvexShapeExpansion.cs" />
+    <Compile Include="Tools\GameRandom.cs" />
     <Compile Include="Tools\Timer.cs" />
     <Compile Include="WindowEvents.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -2,40 +2,58 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using System.Text.RegularExpressions;
 
 namespace GameEngine
 {
 	static partial class Program
 	{
-		private static void DrawGame(Window window, Time dt)
-		{
+		private static RenderWindow GameWindow;
+		private static GameData CurrentGameData;
 
+		private static bool IsUpPressed = false;
+		private static bool IsLeftPressed = false;
+		private static bool IsRightPressed = false;
+		private static bool IsDownPressed = false;
+
+		const float speedFactor = 0.0001f;
+
+		private static void DrawGame(RenderWindow window, Time dt)
+		{
+			foreach (var province in CurrentGameData.Provinces)
+				window.Draw(province);
 		}
 
-		private static void UpdateGame(Window window, Time dt)
+		private static void UpdateGame(RenderWindow window, Time dt)
 		{
-
+			foreach (var province in CurrentGameData.Provinces)
+				province.Update(window, dt);
+			UpdateMovement(dt);
 		}
 
 		private static void Main()
 		{
-			var window = CreateRenderWindow(600, 600, "Ideological War 1948", new ContextSettings());
+			GameWindow = CreateRenderWindow(600, 600, "Ideological War 1948", new ContextSettings());
+
+			CurrentGameData = new GameData()
+			{
+				Provinces = MapLoader.LoadProvinces(@"data\country1.svg")
+			};
 
 			var clock = new Clock();
-			while (window.IsOpen)
+			while (GameWindow.IsOpen)
 			{
-				var dt = clock.ElapsedTime;
+				var dt = clock.Restart();
 
-				window.DispatchEvents();
-				UpdateGame(window, dt);
-				window.Clear();
-				DrawGame(window, dt);
-				window.Display();
+				GameWindow.DispatchEvents();
+				UpdateGame(GameWindow, dt);
+				GameWindow.Clear();
+				DrawGame(GameWindow, dt);
+				GameWindow.Display();
 			}
 		}
 
@@ -52,10 +70,36 @@ namespace GameEngine
 			window.MouseButtonPressed += OnMouseButtonPressed;
 			window.MouseButtonReleased += OnMouseButtonReleased;
 			window.MouseMoved += OnMouseMoved;
+			window.MouseWheelMoved += OnWheelMoved;
 			window.LostFocus += OnLostFocus;
 			window.GainedFocus += OnGainedFocus;
 
 			return window;
+		}
+
+		private static void Zoom(float factor)
+		{
+			var view = GameWindow.GetView();
+			view.Zoom(factor);
+			GameWindow.SetView(view);
+		}
+
+		private static void UpdateMovement(Time dt)
+		{
+			var view = GameWindow.GetView();
+			var range = 200f * dt.AsSeconds();
+
+			if (IsUpPressed)
+				view.Move(new Vector2f(0, -range));
+			if (IsDownPressed)
+				view.Move(new Vector2f(0, range));
+
+			if (IsRightPressed)
+				view.Move(new Vector2f(range, 0));
+			if (IsLeftPressed)
+				view.Move(new Vector2f(-range, 0));
+
+			GameWindow.SetView(view);
 		}
 	}
 }
