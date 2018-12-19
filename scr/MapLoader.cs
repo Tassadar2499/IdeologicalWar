@@ -25,8 +25,7 @@ namespace GameEngine
 			{
 				var id = child.Attributes["id"].Value;
 				var shape = child.Attributes["d"].Value;
-				var points = ConvertSvgToFloats(shape);
-				var province = CreateProvince(id, points.ToList());
+				var province = CreateProvinceFromSvg(id, shape);
 
 				provinces.Add(province);
 			}
@@ -45,21 +44,37 @@ namespace GameEngine
 				yield return float.Parse(match.ToString(), System.Globalization.CultureInfo.InvariantCulture);
 		}
 
-		private static Province CreateProvince(string name, List<float> points)
+		private static List<Vector2f> ConvertPointToVectors(List<float> points)
 		{
-			var shape = new ConvexShape((uint)(points.Count / 2));
+			if (points.Count < 1)
+				throw new ArgumentException("points count must be >= 1");
 
-			if (points.Count < 2)
-				throw new ArgumentException("points count must be >= 2");
 			if (points.Count % 2 != 0)
 				throw new ArgumentException("points count must be % 2 == 0");
 
-			shape.FillColor = GameRandom.GetRandomColor();
-
+			var vectors = new List<Vector2f>();
 			for (var i = 0; i < points.Count; i += 2)
-				shape.SetPoint((uint)(i / 2), new Vector2f(points[i], points[i + 1]));
+				vectors.Add(new Vector2f(points[i], points[i + 1]));
+
+			return vectors;
+		}
+
+		private static Province CreateProvince(string name, List<Vector2f> points)
+		{
+			var shape = new ConvexShape((uint)points.Count)
+			{
+				FillColor = GameRandom.GetRandomColor()
+			};
+
+			for (var i = 0; i < points.Count; i++)
+				shape.SetPoint((uint) i, points[i]);
 
 			return new Province(name, shape);
+		}
+
+		private static Province CreateProvinceFromSvg(string name, string shape)
+		{
+			return CreateProvince(name, ConvertPointToVectors(ConvertSvgToFloats(shape).ToList()));
 		}
 	}
 }
