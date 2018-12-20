@@ -35,16 +35,17 @@ namespace GameEngine
 			var currentY = e.Y;
 			var delta = 10;
 
-			cursorState = SideOfScreen.None;//чтобы экран останавливался после передвижения
+			cursorState = SideOfScreen.None; //чтобы экран останавливался после передвижения
 
 			if (currentX > maxX - delta)
-				cursorState = SideOfScreen.Right;
-			if (currentX < delta)
-				cursorState = SideOfScreen.Left;
+				cursorState |= SideOfScreen.Right;
+			else if (currentX < delta)
+				cursorState |= SideOfScreen.Left;
+
 			if (currentY > maxY - delta)
-				cursorState = SideOfScreen.Bottom;
-			if (currentY < delta)
-				cursorState = SideOfScreen.Top;
+				cursorState |= SideOfScreen.Bottom;
+			else if (currentY < delta)
+				cursorState |= SideOfScreen.Top;
 		}
 
 		private static void OnMouseButtonReleased(object sender, MouseButtonEventArgs e)
