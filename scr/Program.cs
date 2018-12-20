@@ -14,11 +14,11 @@ namespace GameEngine
 	{
 		private enum SideOfScreen
 		{
-			Left,
-			Right,
-			Top,
-			Bottom,
-			None
+			None = 0,
+			Left = 1,
+			Right = 2,
+			Top = 4,
+			Bottom = 8
 		}
 		const float speedFactor = 0.0001f;
 
@@ -102,14 +102,14 @@ namespace GameEngine
 			var view = GameWindow.GetView();
 			var range = 200f * dt.AsSeconds();
 
-			if (IsKeyPressed[Keyboard.Key.W] || cursorState == SideOfScreen.Top)
+			if (IsKeyPressed[Keyboard.Key.W] || cursorState.HasFlag(SideOfScreen.Top))
 				view.Move(new Vector2f(0, -range));
-			if (IsKeyPressed[Keyboard.Key.S] || cursorState == SideOfScreen.Bottom)
+			if (IsKeyPressed[Keyboard.Key.S] || cursorState.HasFlag(SideOfScreen.Bottom))
 				view.Move(new Vector2f(0, range));
 
-			if (IsKeyPressed[Keyboard.Key.D] || cursorState == SideOfScreen.Right)
+			if (IsKeyPressed[Keyboard.Key.D] || cursorState.HasFlag(SideOfScreen.Right))
 				view.Move(new Vector2f(range, 0));
-			if (IsKeyPressed[Keyboard.Key.A] || cursorState == SideOfScreen.Left)
+			if (IsKeyPressed[Keyboard.Key.A] || cursorState.HasFlag(SideOfScreen.Left))
 				view.Move(new Vector2f(-range, 0));
 
 
