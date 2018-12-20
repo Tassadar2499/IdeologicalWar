@@ -29,7 +29,22 @@ namespace GameEngine
 
 		private static void OnMouseMoved(object sender, MouseMoveEventArgs e)
 		{
+			var maxX = GameWindow.Size.X;
+			var maxY = GameWindow.Size.Y;
+			var currentX = e.X;
+			var currentY = e.Y;
+			var delta = 10;
 
+			cursorState = SideOfScreen.None;//чтобы экран останавливался после передвижения
+
+			if (currentX > maxX - delta)
+				cursorState = SideOfScreen.Right;
+			if (currentX < delta)
+				cursorState = SideOfScreen.Left;
+			if (currentY > maxY - delta)
+				cursorState = SideOfScreen.Bottom;
+			if (currentY < delta)
+				cursorState = SideOfScreen.Top;
 		}
 
 		private static void OnMouseButtonReleased(object sender, MouseButtonEventArgs e)

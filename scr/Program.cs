@@ -12,6 +12,14 @@ namespace GameEngine
 {
 	static partial class Program
 	{
+		private enum SideOfScreen
+		{
+			Left,
+			Right,
+			Top,
+			Bottom,
+			None
+		}
 		const float speedFactor = 0.0001f;
 
 		private static RenderWindow GameWindow;
@@ -24,6 +32,7 @@ namespace GameEngine
 				[Keyboard.Key.S] = false,
 				[Keyboard.Key.D] = false
 			};
+		private static SideOfScreen cursorState = SideOfScreen.None;
 
 		private static void DrawGame(RenderWindow window, Time dt)
 		{
@@ -93,15 +102,16 @@ namespace GameEngine
 			var view = GameWindow.GetView();
 			var range = 200f * dt.AsSeconds();
 
-			if (IsKeyPressed[Keyboard.Key.W])
+			if (IsKeyPressed[Keyboard.Key.W] || cursorState == SideOfScreen.Top)
 				view.Move(new Vector2f(0, -range));
-			if (IsKeyPressed[Keyboard.Key.S])
+			if (IsKeyPressed[Keyboard.Key.S] || cursorState == SideOfScreen.Bottom)
 				view.Move(new Vector2f(0, range));
 
-			if (IsKeyPressed[Keyboard.Key.D])
+			if (IsKeyPressed[Keyboard.Key.D] || cursorState == SideOfScreen.Right)
 				view.Move(new Vector2f(range, 0));
-			if (IsKeyPressed[Keyboard.Key.A])
+			if (IsKeyPressed[Keyboard.Key.A] || cursorState == SideOfScreen.Left)
 				view.Move(new Vector2f(-range, 0));
+
 
 			GameWindow.SetView(view);
 		}
