@@ -24,6 +24,9 @@ namespace GameEngine
 
 		private static void OnKeyPressed(object sender, KeyEventArgs e)
 		{
+			if (e.Code == Keyboard.Key.Escape)
+				GameWindow.Close();
+
 			IsKeyPressed[e.Code] = true;
 		}
 

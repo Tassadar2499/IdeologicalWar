@@ -20,9 +20,10 @@ namespace GameEngine.Tools
 
 		public static bool Contain(this ConvexShape convexShape, Vector2f point)
 		{
+			var shapePointCount = convexShape.GetPointCount();
 			var count = 0;
 			
-			for (uint i = 0, j = convexShape.GetPointCount() - 1; i < convexShape.GetPointCount(); j = i++)
+			for (uint i = 0, j = shapePointCount - 1; i < shapePointCount; j = i++)
 			{
 				var current = convexShape.GetPoint(i);
 				var last = convexShape.GetPoint(j);

@@ -8,6 +8,8 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
+using GameEngine.Gui;
+
 namespace GameEngine
 {
 	static partial class Program
@@ -20,7 +22,6 @@ namespace GameEngine
 			Top = 4,
 			Bottom = 8
 		}
-		const float speedFactor = 0.0001f;
 
 		private static RenderWindow GameWindow;
 		private static GameData CurrentGameData;
@@ -33,6 +34,8 @@ namespace GameEngine
 				[Keyboard.Key.D] = false
 			};
 		private static SideOfScreen cursorState = SideOfScreen.None;
+
+		private static List<Panel> Panels;
 
 		private static void DrawGame(RenderWindow window, Time dt)
 		{
@@ -50,12 +53,17 @@ namespace GameEngine
 
 		private static void Main()
 		{
-			GameWindow = CreateRenderWindow(600, 600, "Ideological War 1948", new ContextSettings());
+			GameWindow = CreateRenderWindow(1366, 768, "Ideological War 1948", new ContextSettings());
 
+			Panels = new List<Panel>();
 			CurrentGameData = new GameData()
 			{
 				Provinces = MapLoader.LoadProvinces(@"data\country1.svg")
 			};
+
+			var color = new Color(30, 30, 30);
+			var panelSize = new FloatRect(0.2f, 0.2f, 0.8f, 0.8f);
+			Panels.Add(new Panel("Please work. Ok?", GameWindow, panelSize, color));
 
 			var clock = new Clock();
 			while (GameWindow.IsOpen)
@@ -63,16 +71,22 @@ namespace GameEngine
 				var dt = clock.Restart();
 
 				GameWindow.DispatchEvents();
+
 				UpdateGame(GameWindow, dt);
+				Panels.RemoveAll(p => p.ToDelete);
+
 				GameWindow.Clear();
+
 				DrawGame(GameWindow, dt);
+				foreach (var panel in Panels)
+					GameWindow.Draw(panel);
 				GameWindow.Display();
 			}
 		}
 
 		private static RenderWindow CreateRenderWindow(uint x, uint y, string logo, ContextSettings settings)
 		{
-			var window = new RenderWindow(new VideoMode(x, y), logo, Styles.Default, settings);
+			var window = new RenderWindow(new VideoMode(x, y), logo, Styles.Fullscreen, settings);
 
 			window.SetFramerateLimit(120);
 			window.SetKeyRepeatEnabled(false);
