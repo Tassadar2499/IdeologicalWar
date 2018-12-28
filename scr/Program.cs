@@ -63,7 +63,7 @@ namespace GameEngine
 
 			var color = new Color(30, 30, 30);
 			var panelSize = new FloatRect(0.2f, 0.2f, 0.8f, 0.8f);
-			Panels.Add(new Panel("Please work. Ok?", GameWindow, panelSize, color));
+			Panels.Add(new Panel("Попу мыл?", GameWindow, panelSize, color));
 
 			var clock = new Clock();
 			while (GameWindow.IsOpen)
