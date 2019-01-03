@@ -109,6 +109,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Country.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="Gui\LineShape.cs" />
     <Compile Include="Gui\Panel.cs" />
