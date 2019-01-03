@@ -55,9 +55,9 @@ namespace GameEngine
 		{
 			//тест, можешь удалить
 			var country = new Country("Украина");
-			country.resources = new Country.Resources();
-			country.resources.Oil = 10;
-			country.resources.Uranium = 0;
+			country.Resources = new Country.Resource();
+			country.Resources.Oil = 10;
+			country.Resources.Uranium = 0;
 			//тест, можешь удалить
 
 			GameWindow = CreateRenderWindow(1366, 768, "Ideological War 1948", new ContextSettings());
