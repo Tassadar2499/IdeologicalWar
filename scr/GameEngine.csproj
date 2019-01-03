@@ -109,7 +109,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Country.cs" />
+    <Compile Include="GameObjects\Army.cs" />
+    <Compile Include="GameObjects\Country.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="Gui\LineShape.cs" />
     <Compile Include="Gui\Panel.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Province.cs" />
+    <Compile Include="GameObjects\Resource.cs" />
     <Compile Include="Tools\ConvexShapeExpansion.cs" />
     <Compile Include="Tools\GameRandom.cs" />
     <Compile Include="Tools\Timer.cs" />
