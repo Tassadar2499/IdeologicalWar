@@ -10,5 +10,8 @@ namespace GameEngine
 	{
 		public int Oil { get; set; }
 		public int Uranium { get; set; }
+		public int Iron { get; set; }
+		public int Aluminium { get; set; }
+		public int Rubber { get; set; }
 	}
 }
