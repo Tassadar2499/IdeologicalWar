@@ -65,5 +65,16 @@ namespace GameEngine.Tools
 
 			return vector / lenght;
 		}
+
+		public static Vector2f GetShapeCenter(Shape shape)
+		{
+			var pos = new Vector2f();
+
+			var count = shape.GetPointCount();
+			for (uint i = 0; i < count; i++)
+				pos += shape.GetPoint(i);
+
+			return pos / count;
+		}
 	}
 }

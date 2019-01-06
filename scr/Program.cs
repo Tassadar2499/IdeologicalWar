@@ -61,10 +61,6 @@ namespace GameEngine
 				Provinces = MapLoader.LoadProvinces(@"data\country1.svg")
 			};
 
-			var color = new Color(30, 30, 30);
-			var panelSize = new FloatRect(0.2f, 0.2f, 0.8f, 0.8f);
-			Panels.Add(new Panel("Please work. Ok?", GameWindow, panelSize, color));
-
 			var clock = new Clock();
 			while (GameWindow.IsOpen)
 			{
@@ -114,7 +110,7 @@ namespace GameEngine
 		private static void UpdateMovement(Time dt)
 		{
 			var view = GameWindow.GetView();
-			var range = 200f * dt.AsSeconds();
+			var range = 320f * dt.AsSeconds();
 
 			if (IsKeyPressed[Keyboard.Key.W] || cursorState.HasFlag(SideOfScreen.Top))
 				view.Move(new Vector2f(0, -range));

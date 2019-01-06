@@ -14,13 +14,18 @@ namespace GameEngine
 {
 	public class Province : Drawable
 	{
-		private string name;
+		private Text name;
 		private ConvexShape shape;
 		private Color color;
 
 		public Province(string name, ConvexShape shape)
 		{
-			this.name = name;
+			var shapeCenter =
+			this.name = new Text(name, new Font(@"data\times.ttf"), 16);
+			this.name.Origin = new Vector2f(this.name.GetLocalBounds().Width / 2f, this.name.GetLocalBounds().Height / 2f);
+			this.name.Position = Utils.GetShapeCenter(shape);
+			this.name.Color = Color.White;
+
 			this.shape = shape;
 			this.color = shape.FillColor;
 		}
@@ -28,6 +33,7 @@ namespace GameEngine
 		public void Draw(RenderTarget target, RenderStates states)
 		{
 			target.Draw(shape, states);
+			target.Draw(name, states);
 		}
 
 		public void Update(RenderWindow window, Time dt)

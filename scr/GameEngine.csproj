@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameData.cs" />
+    <Compile Include="WindowMoving.cs" />
     <Compile Include="Gui\LineShape.cs" />
     <Compile Include="Gui\Panel.cs" />
     <Compile Include="Gui\PanelCreater.cs" />
