@@ -18,6 +18,27 @@ namespace GameEngine
 		private float minZoom = 0.2f;
 		private float zoomStep = 0.1f;
 
+		private Vector2f windowSizeKoefCalculated;
+		private bool windowSizeKoefChanged = true;
+		private Vector2f WindowSizeKoef
+		{
+			get
+			{
+				if(windowSizeKoefChanged)
+				{
+					var windowSize = new Vector2f(GameWindow.Size.X, GameWindow.Size.Y);
+					var viewSize = GameWindow.GetView().Size;
+					windowSizeKoefCalculated = new Vector2f(viewSize.X / windowSize.X, viewSize.Y / windowSize.Y);
+					windowSizeKoefChanged = false;
+				}
+
+				return windowSizeKoefCalculated;
+			}
+		}
+
+		private bool WheelPressed = false;
+		private Vector2f WheelPressedPosition;
+
 		private enum SideOfScreen
 		{
 			None = 0,
@@ -45,6 +66,24 @@ namespace GameEngine
 			GameWindow.KeyReleased += OnKeyReleased;
 			GameWindow.KeyPressed += OnKeyPressed;
 			GameWindow.MouseWheelMoved += OnWheelMoved;
+			GameWindow.MouseButtonPressed += OnMousePressed;
+			GameWindow.MouseButtonReleased += OnMouseReleased;
+		}
+
+		private void OnMouseReleased(object sender, MouseButtonEventArgs e)
+		{
+			if (e.Button == Mouse.Button.Middle)
+				WheelPressed = false;
+		}
+
+		private void OnMousePressed(object sender, MouseButtonEventArgs e)
+		{
+			if (e.Button == Mouse.Button.Middle)
+			{
+				WheelPressed = true;
+				var k = WindowSizeKoef;
+				WheelPressedPosition = new Vector2f(e.X * k.X, e.Y * k.Y);
+			}
 		}
 
 		private void OnKeyReleased(object sender, KeyEventArgs e)
@@ -67,7 +106,7 @@ namespace GameEngine
 			var currentX = e.X;
 			var currentY = e.Y;
 			var delta = 10;
-
+			
 			cursorState = SideOfScreen.None;
 
 			if (currentX > maxX - delta)
@@ -79,17 +118,26 @@ namespace GameEngine
 				cursorState |= SideOfScreen.Bottom;
 			else if (currentY < delta)
 				cursorState |= SideOfScreen.Top;
+
+			if(WheelPressed)
+			{
+				var k = WindowSizeKoef;
+				var currentPos = new Vector2f(e.X * k.X, e.Y * k.Y);
+				GameWindow.GetView().Move(WheelPressedPosition - currentPos);
+				WheelPressedPosition = currentPos;
+			}
 		}
 
 		private void OnWheelMoved(object sender, MouseWheelEventArgs e)
 		{
 			var view = GameWindow.GetView();
 			var defaultSize = GameWindow.DefaultView.Size;
-
+			
 			if ((e.Delta > 0 && currentZoom <= maxZoom) || (e.Delta < 0 && currentZoom >= minZoom))
 			{
 				currentZoom += e.Delta * zoomStep;
 				view.Size = defaultSize / currentZoom;
+				windowSizeKoefChanged = true;
 			}
 
 			GameWindow.SetView(view);
