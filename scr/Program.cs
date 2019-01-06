@@ -14,26 +14,8 @@ namespace GameEngine
 {
 	static partial class Program
 	{
-		private enum SideOfScreen
-		{
-			None = 0,
-			Left = 1,
-			Right = 2,
-			Top = 4,
-			Bottom = 8
-		}
-
 		private static RenderWindow GameWindow;
 		private static GameData CurrentGameData;
-		private static Dictionary<Keyboard.Key, bool> IsKeyPressed
-			= new Dictionary<Keyboard.Key, bool>()
-			{
-				[Keyboard.Key.W] = false,
-				[Keyboard.Key.A] = false,
-				[Keyboard.Key.S] = false,
-				[Keyboard.Key.D] = false
-			};
-		private static SideOfScreen cursorState = SideOfScreen.None;
 
 		private static List<Panel> Panels;
 
@@ -47,14 +29,13 @@ namespace GameEngine
 		{
 			foreach (var province in CurrentGameData.Provinces)
 				province.Update(window, dt);
-
-			UpdateMovement(dt);
 		}
 
 		private static void Main()
 		{
 			GameWindow = CreateRenderWindow(1366, 768, "Ideological War 1948", new ContextSettings());
 
+			var WindowMoving = new WindowMoving(GameWindow);
 			Panels = new List<Panel>();
 			CurrentGameData = new GameData()
 			{
@@ -70,6 +51,7 @@ namespace GameEngine
 
 				UpdateGame(GameWindow, dt);
 				Panels.RemoveAll(p => p.ToDelete);
+				WindowMoving.Update(dt);
 
 				GameWindow.Clear();
 
@@ -98,32 +80,6 @@ namespace GameEngine
 			window.GainedFocus += OnGainedFocus;
 
 			return window;
-		}
-
-		private static void Zoom(float factor)
-		{
-			var view = GameWindow.GetView();
-			view.Zoom(factor);
-			GameWindow.SetView(view);
-		}
-
-		private static void UpdateMovement(Time dt)
-		{
-			var view = GameWindow.GetView();
-			var range = 320f * dt.AsSeconds();
-
-			if (IsKeyPressed[Keyboard.Key.W] || cursorState.HasFlag(SideOfScreen.Top))
-				view.Move(new Vector2f(0, -range));
-			if (IsKeyPressed[Keyboard.Key.S] || cursorState.HasFlag(SideOfScreen.Bottom))
-				view.Move(new Vector2f(0, range));
-
-			if (IsKeyPressed[Keyboard.Key.D] || cursorState.HasFlag(SideOfScreen.Right))
-				view.Move(new Vector2f(range, 0));
-			if (IsKeyPressed[Keyboard.Key.A] || cursorState.HasFlag(SideOfScreen.Left))
-				view.Move(new Vector2f(-range, 0));
-
-
-			GameWindow.SetView(view);
 		}
 	}
 }
