@@ -53,14 +53,6 @@ namespace GameEngine
 
 		private static void Main()
 		{
-			//тест, можешь удалить
-			var country = new Country("Украина");
-			country.Resources = new Resource();
-			country.Resources.Oil = 10;
-			country.Resources.Uranium = 0;
-			country.Armies = new Army();
-			//тест, можешь удалить
-
 			GameWindow = CreateRenderWindow(1366, 768, "Ideological War 1948", new ContextSettings());
 
 			Panels = new List<Panel>();
