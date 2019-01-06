@@ -30,7 +30,7 @@ namespace GameEngine.Tools
 			{
 				Time -= Interval;
 				Tick();
-			}				
+			}
 		}
 	}
 }

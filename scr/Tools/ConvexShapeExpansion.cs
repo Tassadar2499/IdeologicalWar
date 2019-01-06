@@ -22,17 +22,17 @@ namespace GameEngine.Tools
 		{
 			var shapePointCount = convexShape.GetPointCount();
 			var count = 0;
-			
+
 			for (uint i = 0, j = shapePointCount - 1; i < shapePointCount; j = i++)
 			{
 				var current = convexShape.GetPoint(i);
 				var last = convexShape.GetPoint(j);
-			
+
 				if (IsBetween(current, last, point) &&
 					(point.X > (last.X - current.X) * (point.Y - current.Y) / (last.Y - current.Y) + current.X))
 					count++;
 			}
-			
+
 			return count % 2 == 1;
 		}
 

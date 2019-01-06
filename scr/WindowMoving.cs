@@ -24,7 +24,7 @@ namespace GameEngine
 		{
 			get
 			{
-				if(windowSizeKoefChanged)
+				if (windowSizeKoefChanged)
 				{
 					var windowSize = new Vector2f(GameWindow.Size.X, GameWindow.Size.Y);
 					var viewSize = GameWindow.GetView().Size;
@@ -106,7 +106,7 @@ namespace GameEngine
 			var currentX = e.X;
 			var currentY = e.Y;
 			var delta = 10;
-			
+
 			cursorState = SideOfScreen.None;
 
 			if (currentX > maxX - delta)
@@ -119,7 +119,7 @@ namespace GameEngine
 			else if (currentY < delta)
 				cursorState |= SideOfScreen.Top;
 
-			if(WheelPressed)
+			if (WheelPressed)
 			{
 				var k = WindowSizeKoef;
 				var currentPos = new Vector2f(e.X * k.X, e.Y * k.Y);
@@ -132,7 +132,7 @@ namespace GameEngine
 		{
 			var view = GameWindow.GetView();
 			var defaultSize = GameWindow.DefaultView.Size;
-			
+
 			if ((e.Delta > 0 && currentZoom <= maxZoom) || (e.Delta < 0 && currentZoom >= minZoom))
 			{
 				currentZoom += e.Delta * zoomStep;

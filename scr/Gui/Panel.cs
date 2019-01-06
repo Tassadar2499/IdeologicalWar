@@ -42,7 +42,7 @@ namespace GameEngine.Gui
 		public Vector2f Position
 		{
 			get => dragPanel.Position;
-			set => Move(value);			
+			set => Move(value);
 		}
 
 		private void ChangeSize(Vector2f newSize)

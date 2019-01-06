@@ -16,7 +16,6 @@ namespace GameEngine
 	{
 		private static RenderWindow GameWindow;
 		private static GameData CurrentGameData;
-
 		private static List<Panel> Panels;
 
 		private static void DrawGame(RenderWindow window, Time dt)

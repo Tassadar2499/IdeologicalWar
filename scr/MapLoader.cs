@@ -67,7 +67,7 @@ namespace GameEngine
 			};
 
 			for (var i = 0; i < points.Count; i++)
-				shape.SetPoint((uint) i, points[i]);
+				shape.SetPoint((uint)i, points[i]);
 
 			return new Province(name, shape);
 		}
