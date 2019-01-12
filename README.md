@@ -11,3 +11,5 @@ Formatting syntax for [Projects cards](https://help.github.com/articles/basic-wr
 NUnit test [tutorial](https://nunit.org/docs/2.6.3/quickStart.html)
 
 SIGHT & LIGHT [tutorial](https://ncase.me/sight-and-light/)
+
+Гайд по [физике](http://www.gamedev.ru/code/articles/?id=4249)
